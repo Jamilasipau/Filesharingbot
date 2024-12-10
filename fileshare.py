@@ -11,7 +11,7 @@ import logging
 from time import time, sleep
 
 # Bot configuration
-BOT_TOKEN = "7691950524:AAF786Og4VT5tVNShvjwX0Satt-B36gn9O8"
+BOT_TOKEN = "7691950524:AAH09wnxuJxDIhLLjYNKUBMJw5WiK4Z-GWM"
 PRIVATE_CHANNEL_ID = -1002367696663  # Your private channel ID
 ADMIN_ID = 6897739611  # Your admin user ID
 CHANNEL_USERNAME = "@join_hyponet"  # Replace with your channel's username
