@@ -1,4 +1,5 @@
 import telebot
+import hashlib
 from telebot.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
