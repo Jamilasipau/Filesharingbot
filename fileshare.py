@@ -1,5 +1,5 @@
 import telebot
-import hashlib
+import hashlib 
 from telebot.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
@@ -12,7 +12,7 @@ import logging
 from time import time, sleep
 
 # Bot configuration
-BOT_TOKEN = "7691950524:AAH09wnxuJxDIhLLjYNKUBMJw5WiK4Z-GWM"
+BOT_TOKEN = "7882079471:AAGeEY4Kmelg_AX6batnTLjgYCoAqJS2PAY"
 PRIVATE_CHANNEL_ID = -1002367696663  # Your private channel ID
 ADMIN_ID = 6897739611  # Your admin user ID
 CHANNEL_USERNAME = "@join_hyponet"  # Replace with your channel's username
@@ -32,27 +32,6 @@ def load_data():
             return json.load(file)
     except FileNotFoundError:
         return {}
-
-app = Flask('')
-
-@app.route('/')
-def home():
-    return "I am alive"
-
-def run_flask():
-    try:
-        app.run(host='0.0.0.0', port=8085)
-    except Exception as e:
-        logging.error(f"Error in Flask server: {e}")
-
-def keep_alive():
-    t = threading.Thread(target=run_flask)
-    t.start()
-
-def main():
-    try:
-        # Start the keep-alive server
-        keep_alive()
 
 # Save button-file mappings
 def save_data(data):
@@ -131,79 +110,44 @@ def check_membership(call):
             bot.answer_callback_query(call.id, "𝐘𝐨𝐮 𝐇𝐚𝐯𝐞𝐧'𝐭 𝐉𝐨𝐢𝐧𝐞𝐝 𝐎𝐮𝐫 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐘𝐞𝐭❌!")
     except Exception as e:
         logging.error(f"Error in check_membership callback: {e}")
-        bot.answer_callback_query(call.id, "An error occurred. Please try again later.")@bot.message_handler(commands=["remove_button"])
-def remove_button(message):
-    if message.from_user.id != ADMIN_ID:
-        bot.reply_to(message, "You are not authorized to perform this action.")
-        return
-    if not button_data:
-        bot.reply_to(message, "No buttons available to remove.")
-        return
-
-    markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    for button_name in button_data.keys():
-        markup.add(KeyboardButton(button_name))
-
-    msg = bot.send_message(
-        message.chat.id,
-        "Select the button you want to remove:",
-        reply_markup=markup,
-    )
-    bot.register_next_step_handler(msg, confirm_removal)
-
-def confirm_removal(message):
-    try:
-        button_name = message.text
-        if button_name in button_data:
-            del button_data[button_name]
-            save_data(button_data)
-            bot.send_message(
-                message.chat.id,
-                f"Button '{button_name}' has been successfully removed.",
-                reply_markup=ReplyKeyboardRemove(),
-            )
-        else:
-            bot.reply_to(message, "Invalid selection. Please use /remove_button again to select a valid button.")
-    except Exception as e:
-        logging.error(f"Error removing button: {e}")
-
-# Command to remove a button (Admin only)
-@bot.message_handler(commands=["removebutton"])
-def remove_button(message):
-    if message.from_user.id != ADMIN_ID:
-        bot.reply_to(message, "You are not authorized to perform this action.")
-        return
-    if not button_data:
-        bot.reply_to(message, "No buttons available to remove.")
-        return
-
-    markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    for button_name in button_data.keys():
-        markup.add(KeyboardButton(button_name))
-
-    msg = bot.send_message(
-        message.chat.id,
-        "Select the button you want to remove:",
-        reply_markup=markup,
-    )
-    bot.register_next_step_handler(msg, confirm_removal)
-
-def confirm_removal(message):
-    try:
-        button_name = message.text
-        if button_name in button_data:
-            del button_data[button_name]
-            save_data(button_data)
-            bot.send_message(
-                message.chat.id,
-                f"Button '{button_name}' has been successfully removed.",
-                reply_markup=ReplyKeyboardRemove(),
-            )
-        else:
-            bot.reply_to(message, "Invalid selection. Please use /remove_button again to select a valid button.")
-    except Exception as e:
-        logging.error(f"Error removing button: {e}")
+        bot.answer_callback_query(call.id, "An error occurred. Please try again later.")
         
+@bot.message_handler(commands=["remove_button"])
+def remove_button(message):
+    if message.from_user.id != ADMIN_ID:
+        bot.reply_to(message, "𝐘𝐨𝐮 𝐀𝐫𝐞 𝐍𝐨𝐭 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐳𝐞𝐝 𝐓𝐨 𝐏𝐞𝐫𝐟𝐨𝐫𝐦 𝐓𝐡𝐢𝐬 𝐀𝐜𝐭𝐢𝐨𝐧.")
+        return
+    if not button_data:
+        bot.reply_to(message, "𝐍𝐨 𝐁𝐮𝐭𝐭𝐨𝐧𝐬 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐓𝐨 𝐑𝐞𝐦𝐨𝐯𝐞.")
+        return
+
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    for button_name in button_data.keys():
+        markup.add(KeyboardButton(button_name))
+
+    msg = bot.send_message(
+        message.chat.id,
+        "𝐒𝐞𝐥𝐞𝐜𝐭 𝐓𝐡𝐞 𝐁𝐮𝐭𝐭𝐨𝐧 𝐘𝐨𝐮 𝐖𝐚𝐧𝐭 𝐓𝐨 𝐑𝐞𝐦𝐨𝐯𝐞:",
+        reply_markup=markup,
+    )
+    bot.register_next_step_handler(msg, confirm_removal)
+
+def confirm_removal(message):
+    try:
+        button_name = message.text
+        if button_name in button_data:
+            del button_data[button_name]
+            save_data(button_data)
+            bot.send_message(
+                message.chat.id,
+                f"Button '{button_name}' has been successfully removed.",
+                reply_markup=ReplyKeyboardRemove(),
+            )
+        else:
+            bot.reply_to(message, "Invalid selection. Please use /remove_button again to select a valid button.")
+    except Exception as e:
+        logging.error(f"Error removing button: {e}")
+
 @bot.message_handler(commands=["update"])
 def update_menu_buttons(message):
     try:
@@ -215,19 +159,19 @@ def update_menu_buttons(message):
                     markup.add(KeyboardButton(button_name))
                 bot.reply_to(
                     message,
-                    "Menu buttons updated successfully! Use the buttons below to access files.",
+                    "𝐌𝐞𝐧𝐮 𝐁𝐮𝐭𝐭𝐨𝐧𝐬 𝐔𝐩𝐝𝐚𝐭𝐞𝐝 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲! 𝐔𝐬𝐞 𝐓𝐡𝐞 𝐁𝐮𝐭𝐭𝐨𝐧𝐬 𝐁𝐞𝐥𝐨𝐰 𝐓𝐨 𝐀𝐜𝐜𝐞𝐬𝐬 𝐅𝐢𝐥𝐞𝐬.",
                     reply_markup=markup,
                 )
             else:
                 # No buttons available, remove the keyboard
                 bot.reply_to(
                     message,
-                    "No buttons are available at the moment. Please check back later.",
+                    "𝐍𝐨 𝐁𝐮𝐭𝐭𝐨𝐧𝐬 𝐀𝐫𝐞 𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐀𝐭 𝐓𝐡𝐞 𝐌𝐨𝐦𝐞𝐧𝐭. 𝐏𝐥𝐞𝐚𝐬𝐞 𝐂𝐡𝐞𝐜𝐤 𝐁𝐚𝐜𝐤 𝐋𝐚𝐭𝐞𝐫.",
                     reply_markup=ReplyKeyboardRemove(),
                 )
         else:
             # User needs to join the channel first
-            bot.reply_to(message, "You need to join our channel to use this feature.")
+            bot.reply_to(message, "𝐘𝐨𝐮 𝐍𝐞𝐞𝐝 𝐓𝐨 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐓𝐨 𝐔𝐬𝐞 𝐓𝐡𝐢𝐬 𝐅𝐞𝐚𝐭𝐮𝐫𝐞.")
     except Exception as e:
         logging.error(f"Error in update_menu_buttons: {e}")
         
@@ -262,18 +206,19 @@ def help_command(message):
 @bot.message_handler(commands=["addbutton"])
 def add_button(message):
     if message.from_user.id != ADMIN_ID:
-        bot.reply_to(message, "You are not authorized to perform this action.")
+        bot.reply_to(message, "𝐘𝐨𝐮 𝐀𝐫𝐞 𝐍𝐨𝐭 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐳𝐞𝐝 𝐓𝐨 𝐏𝐞𝐫𝐟𝐨𝐫𝐦 𝐓𝐡𝐢𝐬 𝐀𝐜𝐭𝐢𝐨𝐧.")
         return
-    msg = bot.reply_to(message, "Send me the name of the new button.")
+    msg = bot.reply_to(message, "𝐒𝐞𝐧𝐝 𝐌𝐞 𝐓𝐡𝐞 𝐍𝐚𝐦𝐞 𝐎𝐟 𝐓𝐡𝐞 𝐍𝐞𝐰 𝐁𝐮𝐭𝐭𝐨𝐧.")
     bot.register_next_step_handler(msg, save_button_name)
 
 def save_button_name(message):
     try:
         button_name = message.text
         if button_name in button_data:
-            bot.reply_to(message, "Button already exists!")
+            bot.reply_to(message, "𝐁𝐮𝐭𝐭𝐨𝐧 𝐀𝐥𝐫𝐞𝐚𝐝𝐲 𝐄𝐱𝐢𝐬𝐭𝐬!")
         else:
-            msg = bot.reply_to(message, f"Button '{button_name}' added! Now, do you want to set a password for this button? (Optional)\nSend 'yes' to set a password, or 'no' to skip.")
+            msg = bot.reply_to(message, f"𝐁𝐮𝐭𝐭𝐨𝐧 '{button_name}' 𝐀𝐝𝐝𝐞𝐝! 𝐍𝐨𝐰, 𝐃𝐨 𝐘𝐨𝐮 𝐖𝐚𝐧𝐭 𝐓𝐨 𝐒𝐞𝐭 𝐀 𝐏𝐚𝐬𝐬𝐰𝐨𝐫𝐝 𝐅𝐨𝐫 𝐓𝐡𝐢𝐬 𝐁𝐮𝐭𝐭𝐨𝐧? (𝐎𝐩𝐭𝐢𝐨𝐧𝐚𝐥)\n\n"
+"𝐒𝐞𝐧𝐝 '𝐲𝐞𝐬' 𝐓𝐨 𝐒𝐞𝐭 𝐀 𝐏𝐚𝐬𝐬𝐰𝐨𝐫𝐝, 𝐎𝐫 '𝐧𝐨' 𝐓𝐨 𝐒𝐤𝐢𝐩.")
             bot.register_next_step_handler(msg, save_button_password, button_name)
             
  # Send a message to the private channel indicating that the button has been created
@@ -289,13 +234,13 @@ def save_button_name(message):
 def save_button_password(message, button_name):
     try:
         if message.text.lower() == "yes":
-            msg = bot.reply_to(message, f"Please send a password for the '{button_name}' button.")
+            msg = bot.reply_to(message, f"𝐏𝐥𝐞𝐚𝐬𝐞 𝐒𝐞𝐧𝐝 𝐀 𝐏𝐚𝐬𝐬𝐰𝐨𝐫𝐝 𝐅𝐨𝐫 𝐓𝐡𝐞 '{button_name}' 𝐁𝐮𝐭𝐭𝐨𝐧.")
             bot.register_next_step_handler(msg, hash_and_store_password, button_name)
         else:
             # Save the button without a password
             button_data[button_name] = {"files": [], "password": None}
             save_data(button_data)
-            bot.reply_to(message, f"Button '{button_name}' added without password.")
+            bot.reply_to(message, f"𝐁𝐮𝐭𝐭𝐨𝐧 '{button_name}' 𝐂𝐫𝐞𝐚𝐭𝐞𝐝 𝐖𝐢𝐭𝐡𝐨𝐮𝐭 𝐏𝐚𝐬𝐬𝐰𝐨𝐫𝐝.")
             
             # Notify the private channel
             bot.send_message(
@@ -315,7 +260,7 @@ def handle_button_press(message):
             
             if button.get("password"):
                 # If the button has a password, ask the user for it
-                msg = bot.reply_to(message, f"Please enter the password to access '{button_name}' button:")
+                msg = bot.reply_to(message, f"𝐄𝐧𝐭𝐞𝐫 𝐓𝐡𝐞 𝐏𝐚𝐬𝐬𝐊𝐞𝐲 𝐓𝐨 𝐆𝐞𝐭 𝐅𝐢𝐥𝐞𝐬 '{button_name}' button🔐:")
                 bot.register_next_step_handler(msg, verify_password, button_name)
             else:
                 # No password, proceed with file sharing
@@ -331,9 +276,9 @@ def handle_button_press(message):
                         elif file["type"] == "audio":
                             bot.send_audio(message.chat.id, file["file_id"])
                 else:
-                    bot.reply_to(message, "No files assigned to this button.")
+                    bot.reply_to(message, "𝐍𝐨 𝐅𝐢𝐥𝐞𝐬 𝐀𝐬𝐬𝐢𝐠𝐧𝐞𝐝 𝐓𝐨 𝐓𝐡𝐢𝐬 𝐁𝐮𝐭𝐭𝐨𝐧.")
         else:
-            bot.reply_to(message, "You need to join our channel to use this feature.")
+            bot.reply_to(message, "𝐘𝐨𝐮 𝐧𝐞𝐞𝐝 𝐭𝐨 𝐣𝐨𝐢𝐧 𝐨𝐮𝐫 𝐜𝐡𝐚𝐧𝐧𝐞𝐥 𝐭𝐨 𝐮𝐬𝐞 𝐭𝐡𝐢𝐬 𝐟𝐞𝐚𝐭𝐮𝐫𝐞.")
     except Exception as e:
         logging.error(f"Error handling button press: {e}")
 
@@ -344,7 +289,7 @@ def verify_password(message, button_name):
         hashed_user_password = hashlib.sha256(user_password.encode()).hexdigest()
         
         if hashed_user_password == button_data[button_name]["password"]:
-            bot.reply_to(message, "Password correct! Access granted.")
+            bot.reply_to(message, "𝐏𝐚𝐬𝐬𝐊𝐞𝐲 𝐕𝐞𝐫𝐢𝐟𝐢𝐞𝐝 ‼️ 𝐀𝐜𝐜𝐞𝐬𝐬 𝐆𝐫𝐚𝐧𝐭𝐞𝐝.")
             # Proceed with sending files
             files = button_data[button_name].get("files", [])
             if files:
@@ -358,9 +303,9 @@ def verify_password(message, button_name):
                     elif file["type"] == "audio":
                         bot.send_audio(message.chat.id, file["file_id"])
             else:
-                bot.reply_to(message, "No files assigned to this button.")
+                bot.reply_to(message, "𝐍𝐨 𝐅𝐢𝐥𝐞𝐬 𝐀𝐬𝐬𝐢𝐠𝐧𝐞𝐝 𝐓𝐨 𝐓𝐡𝐢𝐬 𝐁𝐮𝐭𝐭𝐨𝐧.")
         else:
-            bot.reply_to(message, "Incorrect password. Access denied.")
+            bot.reply_to(message, "𝐈𝐧𝐜𝐨𝐫𝐫𝐞𝐜𝐭 𝐏𝐚𝐬𝐬𝐊𝐞𝐲 ❌🔐.")
     except Exception as e:
         logging.error(f"Error verifying password: {e}")
 
@@ -423,11 +368,12 @@ def hash_and_store_password(message, button_name):
         )
     except Exception as e:
         logging.error(f"Error hashing and storing password: {e}")
-
-bot.polling(none_stop=True, timeout=60)
+        
+# Polling to keep the bot running
+while True:
+    try:
+        bot.polling(none_stop=True, timeout=10, interval=0.1)
     except Exception as e:
-        logging.error(f"Error in main bot polling loop: {e}")
-        # Retry the bot polling to ensure it keeps running
-        time.sleep(5)
-        main()
-
+        logging.error(f"Polling error: {e}")
+        sleep(5)
+        
