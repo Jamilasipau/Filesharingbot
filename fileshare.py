@@ -289,7 +289,7 @@ def verify_password(message, button_name):
         hashed_user_password = hashlib.sha256(user_password.encode()).hexdigest()
         
         if hashed_user_password == button_data[button_name]["password"]:
-            bot.reply_to(message, "𝐏𝐚𝐬𝐬𝐊𝐞𝐲 𝐕𝐞𝐫𝐢𝐟𝐢𝐞𝐝 ‼️ 𝐀𝐜𝐜𝐞𝐬𝐬 𝐆𝐫𝐚𝐧𝐭𝐞𝐝.")
+            bot.reply_to(message, "𝐏𝐚𝐬𝐬𝐊𝐞𝐲 𝐕𝐞𝐫𝐢𝐟𝐢𝐞𝐝 ✅ 𝐀𝐜𝐜𝐞𝐬𝐬 𝐆𝐫𝐚𝐧𝐭𝐞𝐝.")
             # Proceed with sending files
             files = button_data[button_name].get("files", [])
             if files:
