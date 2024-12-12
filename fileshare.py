@@ -12,7 +12,7 @@ import logging
 from time import time, sleep
 
 # Bot configuration
-BOT_TOKEN = "7882079471:AAGeEY4Kmelg_AX6batnTLjgYCoAqJS2PAY"
+BOT_TOKEN = "7691950524:AAH09wnxuJxDIhLLjYNKUBMJw5WiK4Z-GWM"
 PRIVATE_CHANNEL_ID = -1002367696663  # Your private channel ID
 ADMIN_ID = 6897739611  # Your admin user ID
 CHANNEL_USERNAME = "@join_hyponet"  # Replace with your channel's username
@@ -32,6 +32,27 @@ def load_data():
             return json.load(file)
     except FileNotFoundError:
         return {}
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I am alive"
+
+def run_flask():
+    try:
+        app.run(host='0.0.0.0', port=8085)
+    except Exception as e:
+        logging.error(f"Error in Flask server: {e}")
+
+def keep_alive():
+    t = threading.Thread(target=run_flask)
+    t.start()
+
+def main():
+    try:
+        # Start the keep-alive server
+        keep_alive()
 
 # Save button-file mappings
 def save_data(data):
@@ -402,12 +423,11 @@ def hash_and_store_password(message, button_name):
         )
     except Exception as e:
         logging.error(f"Error hashing and storing password: {e}")
-        
-# Polling to keep the bot running
-while True:
-    try:
-        bot.polling(none_stop=True, timeout=10, interval=0.1)
+
+bot.polling(none_stop=True, timeout=60)
     except Exception as e:
-        logging.error(f"Polling error: {e}")
-        sleep(5)
-        
+        logging.error(f"Error in main bot polling loop: {e}")
+        # Retry the bot polling to ensure it keeps running
+        time.sleep(5)
+        main()
+
