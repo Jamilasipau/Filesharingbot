@@ -1,0 +1,7 @@
+name: my-containerized-component
+endpoints:
+  - name: my-endpoint
+    type: http
+    url: http://localhost:8080
+    method: GET
+    description: "This is a sample endpoint for the containerized component."
