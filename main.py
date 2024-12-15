@@ -10,6 +10,20 @@ from telebot.types import (
 import json
 import logging
 from time import time, sleep
+import os
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Hello, world!"
+
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+
+
 
 # Bot configuration
 BOT_TOKEN = "7882079471:AAFnhT5cfjV4dF5rKFcIzq0rd_TPLV0iPUU"
